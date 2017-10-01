@@ -50,6 +50,7 @@ def main():
 
     # get data for testing purpose
     messages = get_data('data/a-s-data.csv')
+    #messages = get_data('data/training data.csv')
 
     # testing the loaded model using all data
     test_model(messages['data'], messages['labels'])

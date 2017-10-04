@@ -34,15 +34,27 @@ def load_model(filename):
 
 def test_model(X, y):
     # predicts labels for X and report against the expected y
-    predictions = predict_label(X)
+    predictions = predict_label_iterable(X)
     print(classification_report(predictions, y))
 
-def predict_label(X):
-    # predicts labels for X using the loaded model
+def predict_label_iterable(X):
+    # predicts label(s) for X using the loaded model
+    # make sure X is iterable list
+    # returns
     if loaded_model == {}:
         sys.exit('error: load the model first')
     else:
         return loaded_model.predict(X)
+
+def predict_label(textString):
+    # predicts label for given text string
+    # converts input string to iterable list for the model to predict
+    # returns predicted label as string
+    X = []
+    X.append(textString)
+    yPredicted = predict_label_iterable(X)
+    yPredictedString = str(yPredicted[0])
+    return yPredictedString
 
 def main():
     # load the model from a saved file for testing purpose
@@ -54,6 +66,10 @@ def main():
 
     # testing the loaded model using all data
     test_model(messages['data'], messages['labels'])
+
+    # testing label prediction using a string
+    print ('predicted = ', predict_label(messages['data'].values[0]))
+    print ('predicted = ', predict_label(messages['data'].values[40]))
 
 if __name__ == '__main__':
     main()
